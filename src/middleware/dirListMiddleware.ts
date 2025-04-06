@@ -2,7 +2,6 @@ import path from "path";
 import { promisify } from "util";
 import fs from "fs";
 import { Request, Response } from "express";
-import { memoryData } from "../data";
 import { DirItemType } from "../types";
 
 const MAIN_DIR =
@@ -15,12 +14,7 @@ const dirListMiddleware = async (req: Request, res: Response) => {
   const { path: pathname = "" } = req.body ?? {};
   const sourcePath = path.join(MAIN_DIR, pathname);
   try {
-    let items: string[] = [];
-    if (memoryData[pathname]) items = memoryData[pathname];
-    else {
-      items = await readdir(sourcePath);
-      memoryData[pathname] = items;
-    }
+    let items: string[] = await readdir(sourcePath);
     const data = items.reduce((acc, curr) => {
       const itemPath = path.join(sourcePath, curr);
       const itemStat = fs.statSync(itemPath);
@@ -42,7 +36,6 @@ const dirListMiddleware = async (req: Request, res: Response) => {
       data,
     });
   } catch (error) {
-    delete memoryData[pathname];
     res.status(500).json({
       message: "Internal Server Error",
     });

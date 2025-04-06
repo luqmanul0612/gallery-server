@@ -2,8 +2,7 @@ import path from "path";
 import { promisify } from "util";
 import fs from "fs";
 import { Request, Response } from "express";
-import { memoryData } from "../data";
-import { FileItemType, FileListType } from "../types";
+import { FileListType } from "../types";
 import { fromFile } from "file-type";
 
 const MAIN_DIR =
@@ -21,9 +20,7 @@ const getFileList = async ({
 }) => {
   const sourcePath = path.join(MAIN_DIR, pathFile);
 
-  let items: string[] = memoryData[pathFile]
-    ? memoryData[pathFile]
-    : (memoryData[pathFile] = await readdir(sourcePath));
+  let items: string[] = await readdir(sourcePath);
 
   const data: FileListType[] = [];
 
