@@ -4,7 +4,7 @@ import fs from "fs";
 import { Request, Response } from "express";
 import { DirItemType } from "../types";
 
-const MAIN_DIR =
+const DEFAULT_BASE_DIR =
   process.env.NODE_ENV === "production"
     ? path.resolve(process.cwd(), "..", "data")
     : "/mnt/c/Users/hkm/Documents/DragonNest/bin/data";
@@ -12,7 +12,7 @@ const readdir = promisify(fs.readdir);
 
 const dirListMiddleware = async (req: Request, res: Response) => {
   const { path: pathname = "" } = req.body ?? {};
-  const sourcePath = path.join(MAIN_DIR, pathname);
+  const sourcePath = path.join(DEFAULT_BASE_DIR, pathname);
   try {
     let items: string[] = await readdir(sourcePath);
     const data = items.reduce((acc, curr) => {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "node NODE_ENV=production dist/server.js",
+    "start": "NODE_ENV=development node dist/index.js",
     "dev": "NODE_ENV=development nodemon",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"

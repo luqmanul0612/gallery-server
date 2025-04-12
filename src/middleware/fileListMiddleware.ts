@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import { FileListType } from "../types";
 import { fromFile } from "file-type";
 
-const MAIN_DIR =
+const DEFAULT_BASE_DIR =
   process.env.NODE_ENV === "production"
     ? path.resolve(process.cwd(), "..", "data")
     : "/mnt/c/Users/hkm/Documents/DragonNest/bin/data";
@@ -18,7 +18,7 @@ const getFileList = async ({
   pathFile: string;
   isNested: boolean;
 }) => {
-  const sourcePath = path.join(MAIN_DIR, pathFile);
+  const sourcePath = path.join(DEFAULT_BASE_DIR, pathFile);
 
   let items: string[] = await readdir(sourcePath);
 

@@ -17,16 +17,18 @@ const main = async () => {
 
   app.use("/api", routes);
 
-  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.use(express.static(path.resolve(process.cwd(), "../client/dist")));
 
   app.get(/(.*)/, (_, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+    res.sendFile(
+      path.join(path.resolve(process.cwd(), "../client/dist"), "index.html")
+    );
   });
 
   const PORT = process.env.PORT || 3210;
-  app.listen(PORT, () =>
-    console.log(`Server running on http://localhost:${PORT}`)
-  );
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
 };
 
 main().catch((ex) => {
