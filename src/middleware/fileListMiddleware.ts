@@ -5,20 +5,18 @@ import { Request, Response } from "express";
 import { FileListType } from "../types";
 import { fromFile } from "file-type";
 
-const DEFAULT_BASE_DIR =
-  process.env.NODE_ENV === "production"
-    ? path.resolve(process.cwd(), "..", "data")
-    : "/mnt/c/Users/hkm/Documents/DragonNest/bin/data";
 const readdir = promisify(fs.readdir);
 
 const getFileList = async ({
   pathFile,
   isNested,
+  baseDir,
 }: {
   pathFile: string;
   isNested: boolean;
+  baseDir: string;
 }) => {
-  const sourcePath = path.join(DEFAULT_BASE_DIR, pathFile);
+  const sourcePath = path.join(baseDir, pathFile);
 
   let items: string[] = await readdir(sourcePath);
 
@@ -55,6 +53,7 @@ const getFileList = async ({
       const nestedData = await getFileList({
         pathFile: path.join(pathFile, curr),
         isNested,
+        baseDir,
       });
       data.push(...nestedData);
     }
@@ -68,11 +67,13 @@ const fileListMiddleware = async (req: Request, res: Response) => {
     pageNumber = 0,
     pageSize = 0,
     isNested = false,
+    baseDir = "",
   } = req.body ?? {};
 
   const fileList = await getFileList({
     pathFile,
     isNested,
+    baseDir,
   });
 
   let resultData = [];
