@@ -17,11 +17,11 @@ const main = async () => {
 
   app.use("/api", routes);
 
-  app.use(express.static(path.resolve(process.cwd(), "../client/dist")));
+  app.use(express.static(path.resolve(process.cwd(), "../gallery-client/dist")));
 
   app.get(/(.*)/, (_, res) => {
     res.sendFile(
-      path.join(path.resolve(process.cwd(), "../client/dist"), "index.html")
+      path.join(path.resolve(process.cwd(), "../gallery-client/dist"), "index.html")
     );
   });
 
