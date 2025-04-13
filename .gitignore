@@ -37,3 +37,6 @@ logs
 
 # Optional: jika pakai ESLint dan Prettier cache
 .eslintcache
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
