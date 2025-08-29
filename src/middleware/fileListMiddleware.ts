@@ -58,6 +58,9 @@ const getFileList = async ({
       data.push(...nestedData);
     }
   }
+  for (const dir of data) {
+    dir.files.sort((a, b) => a.name.localeCompare(b.name));
+  }
   return data;
 };
 
