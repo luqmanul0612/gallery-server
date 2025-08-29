@@ -79,7 +79,10 @@ const fileListMiddleware = async (req: Request, res: Response) => {
     baseDir,
   });
 
-  console.log("object", fileList);
+  console.log(
+    "object",
+    fileList.map((d) => d.files.map((f) => f.name))
+  );
 
   let resultData = [];
   const isPagination = pageNumber > 0 && pageSize > 0;
