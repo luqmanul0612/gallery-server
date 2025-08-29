@@ -59,7 +59,12 @@ const getFileList = async ({
     }
   }
   for (const dir of data) {
-    dir.files.sort((a, b) => a.name.localeCompare(b.name));
+    dir.files.sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
   }
   return data;
 };
@@ -78,11 +83,6 @@ const fileListMiddleware = async (req: Request, res: Response) => {
     isNested,
     baseDir,
   });
-
-  console.log(
-    "object",
-    fileList.map((d) => d.files.map((f) => f.name))
-  );
 
   let resultData = [];
   const isPagination = pageNumber > 0 && pageSize > 0;
