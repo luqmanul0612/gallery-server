@@ -79,6 +79,8 @@ const fileListMiddleware = async (req: Request, res: Response) => {
     baseDir,
   });
 
+  console.log("object", fileList);
+
   let resultData = [];
   const isPagination = pageNumber > 0 && pageSize > 0;
   const counters = { skip: 0, total: 0 };
